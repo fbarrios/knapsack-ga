@@ -10,5 +10,4 @@ class Item
 	def to_s
 		"Item of width #@weight and profit #@profit"
 	end
-
 end

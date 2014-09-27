@@ -1,4 +1,4 @@
-require "./lib/item.rb"
+require "./lib/knapsack_solver.rb"
 require "test/unit"
 
 class TestNAME < Test::Unit::TestCase
@@ -30,9 +30,9 @@ class TestNAME < Test::Unit::TestCase
 			weights = parse_file_content(DatasetDirectory + WeightsFileFormat % testno)
 			profits = parse_file_content(DatasetDirectory + ProfitsFileFormat % testno)
 			
-			for i in 0 ... weights.size
-				item = Item.new(weights.at(i), profits.at(i))
-			end
+			knapsack_solver = KnapsackSolver.new(capacity, weights, profits)
+			
+			puts knapsack_solver
 			
 			solution = parse_file_content(DatasetDirectory + SolutionFileFormat % testno)
 		end
