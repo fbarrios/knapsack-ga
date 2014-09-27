@@ -31,6 +31,12 @@ class TestNAME < Test::Unit::TestCase
 		content = parse_file_content(file_name)
 		content.map! { |c| c.to_i }
 	end
+	
+	
+	def get_boolean_list_from_file(file_name)
+		content = parse_file_content(file_name)
+		content.map! { |c| c.to_i == 1 ? true : false }
+	end
 
 
     def test_method
@@ -48,7 +54,8 @@ class TestNAME < Test::Unit::TestCase
 			knapsack_solver = KnapsackSolver.new(knapsack_problem)
 			knapsack_solver.solve
 			
-			solution = parse_file_content(DatasetDirectory + SolutionFileFormat % testno)
+			solution_file_name = DatasetDirectory + SolutionFileFormat % testno
+			solution = get_boolean_list_from_file(solution_file_name)
 		end
     end
 
