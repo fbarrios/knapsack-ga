@@ -44,7 +44,8 @@ class TestNAME < Test::Unit::TestCase
 			profits_file_name = DatasetDirectory + ProfitsFileFormat % testno
 			profits = get_integer_list_from_file(profits_file_name)
 			
-			knapsack_solver = KnapsackSolver.new(capacity, weights, profits)
+			knapsack_problem = KnapsackProblem.new(capacity, weights, profits)
+			knapsack_solver = KnapsackSolver.new(knapsack_problem)
 			knapsack_solver.solve
 			
 			solution = parse_file_content(DatasetDirectory + SolutionFileFormat % testno)

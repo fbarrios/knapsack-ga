@@ -1,29 +1,27 @@
-require "item.rb"
+require "knapsack_problem.rb"
 
-class KnapsackPopulation
+class KnapsackChromosome
 
-	attr_reader :population
+	attr_reader :chromosome
 
-	# Initializes the first population randomly.
-	def create_first
-		@population = (0 .. @items.length - 1).collect{ rand(2) == 1 ? true : false }
+	def initialize(knapsack_problem)
+		@knapsack_problem = knapsack_problem
+				
+		# Initializes the chromosome randomly.
+		@chromosome = (0 .. knapsack_problem.items.size - 1).collect { 
+			rand(2) == 1 ? true : false 
+		}
 	end
-		
-		
-	def initialize(items, max_capacity)
-		@items, @max_capacity = items, max_capacity
-		population = (0 .. @items.length - 1).collect{ false }
-	end
-	
-	
+
+
 	# Returns a list of the selected items of the solution according to
-	# the population list.
+	# the chromosome list.
 	def selected_items
 		selected = []
 		
-		for i in 0 ... @items.length
-			if population.at(i)
-				selected.push @items.at(i)
+		for i in 0 ... @knapsack_problem.items.size
+			if chromosome.at(i) == true
+				selected.push @knapsack_problem.items.at(i)
 			end
 		end
 		
@@ -43,17 +41,19 @@ class KnapsackPopulation
 	end
 	
 	
-	# Removes a random item from the population.
+	# Removes a random item from the chromosome.
 	def remove_included_item
 		selected_indexes = []
 		
-		for i in 0 ... population.length
-			if population.at(i)
+		puts chromosome.size
+		
+		for i in 0 ... chromosome.size
+			if chromosome.at(i) == true
 				selected_indexes.push i
 			end
 		end
 				
-		population[selected_indexes.sample] = false
+		chromosome[selected_indexes.sample] = false
 	end
 	
 	
@@ -67,7 +67,7 @@ class KnapsackPopulation
 	
 	
 	def to_s
-		"#@population"
+		"Selected indexes in the chromosome: #{selected_items}"
 	end
 
 end

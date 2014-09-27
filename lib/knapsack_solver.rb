@@ -1,37 +1,26 @@
 require "item.rb"
-require "knapsack_population.rb"
+require "knapsack_chromosome.rb"
 
 class KnapsackSolver
-	attr_reader :items
-	attr_reader :max_capacity
 	
-	# Creates a knapsack given the maximum capacity, a list of item 
-	# weights and a list of item profits.
-	def initialize(max_capacity, weights, profits)
+	NumberOfGenerations = 100
+	NumberOfChromosomes = 10
+
+	@generation
+	@population
+	
+	def initialize(knapsack_problem)
+		@knapsack_problem = knapsack_problem
 		
-		@max_capacity = max_capacity
-		@items = []
-		
-		for i in 0 ... weights.size
-			items.push Item.new(weights.at(i), profits.at(i))
-		end	
-		
+		@population = (1 .. NumberOfChromosomes).collect{ 
+			KnapsackChromosome.new(knapsack_problem)
+		}
 	end
 	
 	
 	# Solves the knapsack problem using a genetic algorithm.
 	def solve
-		
-		population = KnapsackPopulation.new(items, max_capacity)
-		population.create_first
-		population.fitness
-		
+		puts @population
 	end
 	
-	
-	def to_s
-		"Knapsack problem of maximum capacity #@max_capacity with items #@items"
-	end
-
-
 end
