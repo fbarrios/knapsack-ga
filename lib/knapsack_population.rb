@@ -16,10 +16,12 @@ class KnapsackPopulation
 	end
 	
 	
+	# Returns a list of the selected items of the solution according to
+	# the population list.
 	def selected_items
 		selected = []
 		
-		for i in 0 ... @items.size
+		for i in 0 ... @items.length
 			if population.at(i)
 				selected.push @items.at(i)
 			end
@@ -29,19 +31,38 @@ class KnapsackPopulation
 	end
 	
 	
+	# Returns the total weight of the selected items.
 	def total_weight
 		return selected_items.reduce(0) { |total, item| total += item.weight }
 	end
 	
 	
+	# Returns the total profits of the selected items.
 	def total_profit
 		return selected_items.reduce(0) { |total, item| total += item.profit }
 	end
 	
 	
+	# Removes a random item from the population.
+	def remove_included_item
+		selected_indexes = []
+		
+		for i in 0 ... population.length
+			if population.at(i)
+				selected_indexes.push i
+			end
+		end
+				
+		population[selected_indexes.sample] = false
+	end
+	
+	
 	def fitness		
-		puts population
-		puts total_weight
+		while total_weight > @max_capacity
+			remove_included_item
+		end
+				
+		return total_weight, total_profit
 	end
 	
 	
