@@ -1,6 +1,6 @@
 require "knapsack_problem.rb"
 
-class KnapsackChromosome
+class Chromosome
 
 	attr_reader :chromosome
 

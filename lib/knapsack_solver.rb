@@ -1,5 +1,5 @@
 require "item.rb"
-require "knapsack_chromosome.rb"
+require "chromosome.rb"
 
 class KnapsackSolver
 	
@@ -13,7 +13,7 @@ class KnapsackSolver
 		@knapsack_problem = knapsack_problem
 		
 		@population = (1 .. NumberOfChromosomes).collect{ 
-			KnapsackChromosome.new(knapsack_problem)
+			Chromosome.new(knapsack_problem)
 		}
 	end
 	
