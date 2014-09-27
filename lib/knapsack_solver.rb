@@ -1,5 +1,5 @@
 require "item.rb"
-require "knapsack_solution.rb"
+require "knapsack_population.rb"
 
 class KnapsackSolver
 	attr_reader :items
