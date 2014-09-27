@@ -52,10 +52,13 @@ class TestNAME < Test::Unit::TestCase
 			
 			knapsack_problem = KnapsackProblem.new(capacity, weights, profits)
 			knapsack_solver = KnapsackSolver.new(knapsack_problem)
-			knapsack_solver.solve
+			solution = knapsack_solver.solve
 			
 			solution_file_name = DatasetDirectory + SolutionFileFormat % testno
-			solution = get_boolean_list_from_file(solution_file_name)
+			optimal_solution = get_boolean_list_from_file(solution_file_name)
+			
+			assert_equal knapsack_problem.solution_profit(optimal_solution),
+						 knapsack_problem.solution_profit(solution)
 		end
     end
 

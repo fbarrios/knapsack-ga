@@ -18,6 +18,26 @@ class KnapsackProblem
 		@max_capacity = max_capacity
 	end
 
+
+	# Returns the profit of a given solution.
+	def solution_profit(solution)
+		selected_items(solution).reduce(0) { |total, item| total += item.profit }
+	end
+
+
+	# Returns a list of the selected items given a solution.
+	def selected_items(solution)
+		selected = []
+		
+		for i in 0 ... items.size
+			if solution.at(i) == true
+				selected.push items.at(i)
+			end
+		end
+		
+		return selected
+	end
+	
 	
 	def to_s
 		"Knapsack problem of maximum capacity #@max_capacity with items #@items"
