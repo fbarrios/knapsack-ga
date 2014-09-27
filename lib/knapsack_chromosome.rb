@@ -14,6 +14,32 @@ class KnapsackChromosome
 	end
 
 
+	def fitness
+		while total_weight > @knapsack_problem.max_capacity
+			remove_included_item
+		end
+				
+		return total_weight
+	end
+	
+	
+	def crossover(other)
+		return nil
+	end
+	
+	
+	def mutate(other)
+		return nil
+	end	
+	
+	
+	def to_s
+		"Selected indexes in the chromosome: #{selected_items}"
+	end
+
+
+	private
+	
 	# Returns a list of the selected items of the solution according to
 	# the chromosome list.
 	def selected_items
@@ -44,9 +70,7 @@ class KnapsackChromosome
 	# Removes a random item from the chromosome.
 	def remove_included_item
 		selected_indexes = []
-		
-		puts chromosome.size
-		
+
 		for i in 0 ... chromosome.size
 			if chromosome.at(i) == true
 				selected_indexes.push i
@@ -54,20 +78,6 @@ class KnapsackChromosome
 		end
 				
 		chromosome[selected_indexes.sample] = false
-	end
-	
-	
-	def fitness		
-		while total_weight > @max_capacity
-			remove_included_item
-		end
-				
-		return total_weight, total_profit
-	end
-	
-	
-	def to_s
-		"Selected indexes in the chromosome: #{selected_items}"
 	end
 
 end
