@@ -31,8 +31,7 @@ class TestNAME < Test::Unit::TestCase
 			profits = parse_file_content(DatasetDirectory + ProfitsFileFormat % testno)
 			
 			knapsack_solver = KnapsackSolver.new(capacity, weights, profits)
-			
-			puts knapsack_solver
+			knapsack_solver.solve
 			
 			solution = parse_file_content(DatasetDirectory + SolutionFileFormat % testno)
 		end
