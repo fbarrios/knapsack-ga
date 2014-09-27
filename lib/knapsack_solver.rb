@@ -24,9 +24,7 @@ class KnapsackSolver
 		
 		population = KnapsackPopulation.new(items, max_capacity)
 		population.create_first
-		
-		puts population
-		
+		population.fitness
 		
 	end
 	
