@@ -1,4 +1,4 @@
-require "./lib/NAME.rb"
+require "./lib/item.rb"
 require "test/unit"
 
 class TestNAME < Test::Unit::TestCase
@@ -17,16 +17,24 @@ class TestNAME < Test::Unit::TestCase
 			f.each_line { |line| content.push line.to_i } 
 		end
 				
+		if content.length == 1
+			return content.first
+		end
+				
 		return content
     end
 
     def test_method
-		1.upto(8) do |testno|
-			capacities = parse_file_content(DatasetDirectory + CapacityFileFormat % testno)
+		1.upto(1) do |testno|
+			capacity = parse_file_content(DatasetDirectory + CapacityFileFormat % testno)
 			weights = parse_file_content(DatasetDirectory + WeightsFileFormat % testno)
 			profits = parse_file_content(DatasetDirectory + ProfitsFileFormat % testno)
-			solution = parse_file_content(DatasetDirectory + SolutionFileFormat % testno)
 			
+			for i in 0 ... weights.size
+				item = Item.new(weights.at(i), profits.at(i))
+			end
+			
+			solution = parse_file_content(DatasetDirectory + SolutionFileFormat % testno)
 		end
     end
 
