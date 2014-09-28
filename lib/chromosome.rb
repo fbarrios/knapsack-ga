@@ -4,10 +4,10 @@ class Chromosome
 
 	attr_reader :chromosome
 
-	def initialize(knapsack_problem, chromosome=chromosome)
+	def initialize(knapsack_problem, chromosome=nil)
 		@knapsack_problem = knapsack_problem
 		
-		if chromosome.nil?
+		if chromosome == nil
 			# Initializes the chromosome randomly.
 			@chromosome = (0 .. knapsack_problem.items.size - 1).collect { 
 				rand(2) == 1 ? true : false 
@@ -23,15 +23,15 @@ class Chromosome
 			remove_included_item
 		end
 				
-		return total_weight
+		return total_profit
 	end
 	
 	
 	def crossover(other)
-		items_size = self.chromosome.size
-		new_gen = self.chromosome[0, items_size / 2] + other.chromosome[items_size / 2, items_size]
-	
-		return Chromosome.new(@knapsack_problem, chromosome=new_gen)
+		ratio = rand(self.chromosome.size)
+		new_gen_data = self.chromosome[0, ratio] + other.chromosome[ratio, self.chromosome.size]
+		
+		return Chromosome.new(@knapsack_problem, new_gen_data)
 	end
 	
 	
@@ -47,7 +47,7 @@ class Chromosome
 	
 	
 	def to_s
-		"Selected indexes in the chromosome: #{selected_items}"
+		"Chromosome with solution: #{chromosome.collect{ |c| c == true ? 1 : 0 }}\n"
 	end
 
 

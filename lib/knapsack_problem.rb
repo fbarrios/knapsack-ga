@@ -38,9 +38,4 @@ class KnapsackProblem
 		return selected
 	end
 	
-	
-	def to_s
-		"Knapsack problem of maximum capacity #@max_capacity with items #@items"
-	end
-
 end
