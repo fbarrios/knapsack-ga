@@ -27,8 +27,7 @@ class KnapsackSolver
 		while number_of_max_fitness_values(fitness_values) < PopulationSize * 9 / 10 \
 				and generation < NumberOfGenerations
 			
-			puts "\t Generation number: #{generation}"
-			puts "\t Maximum profit: #{fitness_values.sort.last}"
+			puts "\t Generation number: #{ generation } - Profit: #{ fitness_values.max }"
 			
 			new_population = []
 

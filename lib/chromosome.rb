@@ -3,6 +3,7 @@ require 'knapsack_problem.rb'
 class Chromosome
 
 	attr_reader :chromosome
+  @_fitness
 
 	def initialize(knapsack_problem, chromosome=nil)
 		@knapsack_problem = knapsack_problem
@@ -14,16 +15,18 @@ class Chromosome
 			}
 		else
 			@chromosome = chromosome
-		end
+    end
+
+    validate()
 	end
 
 
 	def fitness
-		while total_weight > @knapsack_problem.max_capacity
-			remove_included_item
-		end
-				
-		return total_profit
+    if @_fitness.nil?
+      @_fitness = selected_items.reduce(0) { |total, item| total += item.profit }
+    end
+
+    return @_fitness
 	end
 	
 	
@@ -42,7 +45,9 @@ class Chromosome
 			if random_number == 0
 				chromosome[i] = !chromosome[i]
 			end
-		end
+    end
+
+    validate()
 	end	
 	
 	
@@ -52,24 +57,27 @@ class Chromosome
 
 
 	private
-	
+
+  # Verifies that the total weight of the solution doesn't exceed the
+  # maximum knapsack capacity and removes random items if it does.
+  def validate
+    while total_weight > @knapsack_problem.max_capacity
+      remove_included_item
+    end
+  end
+
 	
 	def selected_items
 		return @knapsack_problem.selected_items(chromosome)
 	end
-	
+
+
 	# Returns the total weight of the selected items.
 	def total_weight
 		return selected_items.reduce(0) { |total, item| total += item.weight }
 	end
 	
-	
-	# Returns the total profits of the selected items.
-	def total_profit
-		return selected_items.reduce(0) { |total, item| total += item.profit }
-	end
-	
-	
+
 	# Removes a random item from the chromosome.
 	def remove_included_item
 		selected_indexes = []
@@ -81,6 +89,6 @@ class Chromosome
 		end
 				
 		chromosome[selected_indexes.sample] = false
-	end
+  end
 
 end
