@@ -1,6 +1,7 @@
 require './lib/knapsack_solver.rb'
 require './lib/file_utils.rb'
 require 'test/unit'
+require 'benchmark'
 
 class TestNAME < Test::Unit::TestCase
 
@@ -26,13 +27,26 @@ class TestNAME < Test::Unit::TestCase
 
         knapsack_problem = KnapsackProblem.new(capacity, weights, profits)
         knapsack_solver = KnapsackSolver.new(knapsack_problem)
-        solution = knapsack_solver.solve()
+
+        solution = 0
+
+        time_elapsed = Benchmark.realtime {
+          solution = knapsack_solver.solve()
+        }
+
+        solution_profit = knapsack_problem.solution_profit(solution)
 
         solution_file_name = DatasetDirectory + SolutionFileFormat % testno
         optimal_solution = get_boolean_list_from_file(solution_file_name)
+        optimal_solution_profit = knapsack_problem.solution_profit(optimal_solution)
 
-        assert_equal knapsack_problem.solution_profit(optimal_solution),
-               knapsack_problem.solution_profit(solution)
+        if optimal_solution_profit == solution_profit
+          puts 'Optimal solution found!'
+        else
+          puts "Non optimal solution found! Expected: #{ optimal_solution_profit }, found: #{ solution_profit }."
+        end
+
+        puts "Time elapsed: #{ time_elapsed } seconds.\n\n"
       end
     end
 

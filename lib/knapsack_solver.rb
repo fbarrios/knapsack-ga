@@ -27,8 +27,8 @@ class KnapsackSolver
 		while number_of_max_fitness_values(fitness_values) < PopulationSize * 9 / 10 \
 				and generation < NumberOfGenerations
 			
-			puts "Generation number: #{generation}"
-			puts "Maximum profit: #{fitness_values.sort.last}"
+			puts "\t Generation number: #{generation}"
+			puts "\t Maximum profit: #{fitness_values.sort.last}"
 			
 			new_population = []
 
@@ -48,7 +48,7 @@ class KnapsackSolver
 			generation += 1
 		end
 		
-		puts "Solution found in #{generation} generations: #{fitness_values.sort.last}"
+		puts "\t Solution found in #{generation} generations.\n"
 		
 		@population.sort! { |c1, c2| c1.fitness <=> c2.fitness }
 		return @population.pop.chromosome
