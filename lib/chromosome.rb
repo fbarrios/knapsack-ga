@@ -13,7 +13,11 @@ class Chromosome
 			@chromosome = (0 .. knapsack_problem.items.size - 1).collect { 
 				rand(2) == 1 ? true : false 
 			}
-		else
+    else
+      if chromosome.size != knapsack_problem.items.size
+        raise "Invalid chromosome of size #{ chromosome.size } for problem of size #{ knapsack_problem.items.size }."
+      end
+
 			@chromosome = chromosome
     end
 
@@ -30,12 +34,26 @@ class Chromosome
 	end
 	
 	
-	def crossover(other)
+	def crossover_simple(other)
 		ratio = rand(self.chromosome.size)
-		new_gen_data = self.chromosome[0, ratio] + other.chromosome[ratio, self.chromosome.size]
+    chromosomes = [ self.chromosome, other.chromosome ].shuffle!
+
+		new_gen_data = chromosomes[0][0, ratio] + chromosomes[1][ratio, self.chromosome.size]
 		
 		return Chromosome.new(@knapsack_problem, new_gen_data)
-	end
+  end
+
+
+  def crossover_double(other)
+    ratio_1 = rand(self.chromosome.size / 2)
+    ratio_2 = self.chromosome.size / 2 + rand(self.chromosome.size / 2)
+
+    chromosomes = [ self.chromosome, other.chromosome ].shuffle!
+
+    new_gen_data =  chromosomes[0][0 ... ratio_1] + chromosomes[1][ratio_1 ... ratio_2] + chromosomes[0][ratio_2 ... self.chromosome.size]
+
+    return Chromosome.new(@knapsack_problem, new_gen_data)
+  end
 	
 	
 	def mutate

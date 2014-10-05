@@ -4,7 +4,7 @@ require 'chromosome.rb'
 class KnapsackSolver
 	
 	NumberOfGenerations = 100
-	PopulationSize = 100
+	PopulationSize = 300
 
 	@population
 	
@@ -27,17 +27,18 @@ class KnapsackSolver
 		while number_of_max_fitness_values(fitness_values) < PopulationSize * 9 / 10 \
 				and generation < NumberOfGenerations
 			
-			puts "\t Generation number: #{ generation } - Profit: #{ fitness_values.max }"
-
-      @population.sort! { |c1, c2| c1.fitness <=> c2.fitness }
+			@population.sort! { |c1, c2| c1.fitness <=> c2.fitness }
 			@population = get_new_population()
 		
 			fitness_values = @population.collect { |chromosome| chromosome.fitness }
-			generation += 1
+			puts "\t Generation number: #{ generation } - Profit: #{ fitness_values.max }"
+
+      generation += 1
 		end
 		
 		puts "\t Solution found in #{generation} generations.\n"
-		
+
+    @population.sort! { |c1, c2| c1.fitness <=> c2.fitness }
 		return @population.pop.chromosome
 	end
 	
@@ -47,14 +48,30 @@ class KnapsackSolver
   def get_new_population
     new_population = []
 
-    while new_population.size < @population.size
-      offspring_1 = select
-      offspring_2 = select
+    # The best chromosomes are always kept.
+    new_population += @population[ -PopulationSize/10 .. -1 ]
 
-      new_gen = offspring_1.crossover(offspring_2)
-      new_gen.mutate
+    # A majority of the chromosomes are just crossovered and mutated.
+    while new_population.size < PopulationSize * 9 / 10
+      offspring_1 = select()
+      offspring_2 = select()
+
+      new_gen = nil
+
+      if rand(2) == 1
+        new_gen = offspring_1.crossover_double(offspring_2)
+      else
+        new_gen = offspring_1.crossover_simple(offspring_2)
+      end
+
+      new_gen.mutate()
 
       new_population.push(new_gen)
+    end
+
+    # The rest is random.
+    while new_population.size < PopulationSize
+      new_population.push(@population.sample())
     end
 
     return new_population
@@ -73,13 +90,13 @@ class KnapsackSolver
 		if random_number < 5
 			bottom = 0
 			top = population_size / 4 - 1
-		elsif 5 <= random_number and random_number < 20
+		elsif 5 <= random_number and random_number < 40
 			bottom = population_size / 4
 			top = population_size / 2 - 1
-		elsif 20 <= random_number and random_number < 50
+		elsif 40 <= random_number and random_number < 75
 			bottom = population_size / 2
 			top = population_size * 3 / 4 - 1
-		elsif 50 <= random_number
+		elsif 75 <= random_number
 			bottom = population_size * 3 / 4
 			top = population_size - 1
 		end
