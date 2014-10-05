@@ -13,6 +13,10 @@ class TestNAME < Test::Unit::TestCase
 	SolutionFileFormat = 'p%02d_s.txt'
 
     def test_method
+
+      tests_ok = 0
+      tests_failed = 0
+
       1.upto(8) do |testno|
         capacity_file_name = DatasetDirectory + CapacityFileFormat % testno
         capacity = get_single_value_from_file(capacity_file_name)
@@ -42,12 +46,17 @@ class TestNAME < Test::Unit::TestCase
 
         if optimal_solution_profit == solution_profit
           puts 'Optimal solution found!'
+          tests_ok += 1
         else
           puts "Non optimal solution found! Expected: #{ optimal_solution_profit }, found: #{ solution_profit }."
+          tests_failed += 1
         end
 
         puts "Time elapsed: #{ time_elapsed } seconds.\n\n"
       end
+
+      puts "Optimal solutions found: #{ tests_ok }"
+      puts "Non optimal solutions found: #{ tests_failed }"
     end
 
 end

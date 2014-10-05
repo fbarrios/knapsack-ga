@@ -29,19 +29,7 @@ class KnapsackSolver
 			
 			puts "\t Generation number: #{ generation } - Profit: #{ fitness_values.max }"
 			
-			new_population = []
-
-			while new_population.size < @population.size
-				offspring_1 = select
-				offspring_2 = select
-			
-				new_gen = offspring_1.crossover(offspring_2)
-				new_gen.mutate
-				
-				new_population.push(new_gen)
-			end
-			
-			@population = new_population
+			@population = get_new_population()
 		
 			fitness_values = @population.collect { |chromosome| chromosome.fitness }
 			generation += 1
@@ -55,6 +43,23 @@ class KnapsackSolver
 	
 	
 	private
+
+  def get_new_population
+    @population.sort! { |c1, c2| c1.fitness <=> c2.fitness }
+    new_population = []
+
+    while new_population.size < @population.size
+      offspring_1 = select
+      offspring_2 = select
+
+      new_gen = offspring_1.crossover(offspring_2)
+      new_gen.mutate
+
+      new_population.push(new_gen)
+    end
+
+    return new_population
+  end
 	
 	
 	# Selects a chromosome as offspring for the next generation.
