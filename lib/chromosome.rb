@@ -1,4 +1,4 @@
-require "knapsack_problem.rb"
+require 'knapsack_problem.rb'
 
 class Chromosome
 

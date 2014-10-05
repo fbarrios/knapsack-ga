@@ -1,5 +1,5 @@
-require "item.rb"
-require "chromosome.rb"
+require 'item.rb'
+require 'chromosome.rb'
 
 class KnapsackSolver
 	
