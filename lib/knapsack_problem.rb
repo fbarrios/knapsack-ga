@@ -30,7 +30,7 @@ class KnapsackProblem
     selected = []
     
     for i in 0 ... items.size
-      if solution.at(i) == true
+      if ( (solution.at(i) == true) || (solution.at(i) == 1) )
         selected.push items.at(i)
       end
     end

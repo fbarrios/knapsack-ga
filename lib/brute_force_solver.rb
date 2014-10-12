@@ -1,7 +1,4 @@
 require 'item.rb'
-require 'chromosome.rb'
-
-
 
 class BruteForceSolver
     
@@ -25,7 +22,7 @@ class BruteForceSolver
       currentSolution = selected_items(problemSize, j);        
       currentWeight = 0;
       currentProfit = 0;
-	    for i in 0..probleSize
+	    for i in 0..(problemSize-1)
         currentWeight += currentSolution[i] * @knapsack_problem.items[i].weight;
         currentProfit += currentSolution[i] * @knapsack_problem.items[i].profit;
       end
@@ -36,15 +33,20 @@ class BruteForceSolver
           # The solution is greater than all the previous ones
           totalProfit = currentProfit;
           solutions.clear();
-          solutions.push(j);
+          solutions.push(currentSolution);
         elsif (currentProfit == totalProfit)
           # We found another solution to the problem
-          solutions.push(j);
+          solutions.push(currentSolution);
         end
 
-    
       end
     end
+    puts "\t Solutions found: #{ solutions.size } - Profit: #{ totalProfit }"
+    
+    solutions.each { |x| puts "\t\t #{ x }" }    
+      
+
+    return solutions;
   end
 
 
