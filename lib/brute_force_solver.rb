@@ -9,44 +9,44 @@ class BruteForceSolver
   
   # Solves the knapsack problem using brute force.
   def solve
-    problemSize = @knapsack_problem.items.size();
-    maxCapacity = @knapsack_problem.max_capacity;
-    totalProfit = 0;
+    problem_size = @knapsack_problem.items.size()
+    max_capacity = @knapsack_problem.max_capacity
+    total_profit = 0
 
     solutions = []
     
-    # We iterate through the hole domain of posibles solutions
+    # We iterate through the whole domain of posible solutions
     # the solution is an array of bits, whose integer representation is 'j'
-    for j in 0..2**problemSize
+    for j in 0..2**problem_size
       # For each solution, we calculate the total profit, and if it fits in the knapsack 
-      currentSolution = selected_items(problemSize, j);        
-      currentWeight = 0;
-      currentProfit = 0;
-	    for i in 0..(problemSize-1)
-        currentWeight += currentSolution[i] * @knapsack_problem.items[i].weight;
-        currentProfit += currentSolution[i] * @knapsack_problem.items[i].profit;
+      current_solution = selected_items(problem_size, j)
+      current_weight = 0
+      current_profit = 0
+	    for i in 0..(problem_size-1)
+        current_weight += current_solution[i] * @knapsack_problem.items[i].weight
+        current_profit += current_solution[i] * @knapsack_problem.items[i].profit
       end
 
-      if (currentWeight <= maxCapacity) 
+      if current_weight <= max_capacity
         # The solution fits in the knapsack
-        if (currentProfit > totalProfit)
+        if current_profit > total_profit
           # The solution is greater than all the previous ones
-          totalProfit = currentProfit;
-          solutions.clear();
-          solutions.push(currentSolution);
-        elsif (currentProfit == totalProfit)
+          total_profit = current_profit
+          solutions.clear()
+          solutions.push(current_solution)
+        elsif current_profit == total_profit
           # We found another solution to the problem
-          solutions.push(currentSolution);
+          solutions.push(current_solution)
         end
 
       end
     end
-    puts "\t Solutions found: #{ solutions.size } - Profit: #{ totalProfit }"
+    puts "\t Solutions found: #{ solutions.size } - Profit: #{ total_profit }"
     
     solutions.each { |x| puts "\t\t #{ x }" }    
       
 
-    return solutions;
+    return solutions
   end
 
 

@@ -15,7 +15,7 @@ class TestNAME < Test::Unit::TestCase
 
   def test_ga_solver
 
-    puts "*** Genetic Algorithm ***"
+    puts '*** Genetic Algorithm ***'
 
     tests_ok = 0
     tests_failed = 0
@@ -30,7 +30,7 @@ class TestNAME < Test::Unit::TestCase
       profits_file_name = DatasetDirectory + ProfitsFileFormat % testno
       profits = get_integer_list_from_file(profits_file_name)
 
-      puts "Solving problem ##{ testno } with Genetic Algorithm."
+      puts "Solving problem ##{ testno } using a Genetic Algorithm."
 
       knapsack_problem = KnapsackProblem.new(capacity, weights, profits)
       knapsack_solver = KnapsackSolver.new(knapsack_problem)
@@ -68,7 +68,7 @@ class TestNAME < Test::Unit::TestCase
 
   def test_bf_solver
 
-    puts "*** Brute Force ***"
+    puts '*** Brute Force ***'
 
     tests_ok = 0
     tests_failed = 0
@@ -83,7 +83,7 @@ class TestNAME < Test::Unit::TestCase
       profits_file_name = DatasetDirectory + ProfitsFileFormat % testno
       profits = get_integer_list_from_file(profits_file_name)
 
-      puts "Solving problem ##{ testno } with Brute Force."
+      puts "Solving problem ##{ testno } using Brute Force."
 
       knapsack_problem = KnapsackProblem.new(capacity, weights, profits)
       bruteForce_solver = BruteForceSolver.new(knapsack_problem)
@@ -91,7 +91,7 @@ class TestNAME < Test::Unit::TestCase
       solution = 0
 
       time_elapsed = Benchmark.realtime {
-	solution = bruteForce_solver.solve()
+        solution = bruteForce_solver.solve()
       }
 
       # The brute force method, will give us all the solutions, we just want one
@@ -102,11 +102,11 @@ class TestNAME < Test::Unit::TestCase
       optimal_solution_profit = knapsack_problem.solution_profit(optimal_solution)
 
       if optimal_solution_profit == solution_profit
-	puts 'BF Optimal solution found!'
-	tests_ok += 1
+        puts 'BF Optimal solution found!'
+        tests_ok += 1
       else
-	puts "BF Non optimal solution found! Expected: #{ optimal_solution_profit }, found: #{ solution_profit }."
-	tests_failed += 1
+	      puts "BF Non optimal solution found! Expected: #{ optimal_solution_profit }, found: #{ solution_profit }."
+	      tests_failed += 1
       end
 
       puts "BF Time elapsed: #{ time_elapsed } seconds for #{ weights.size } items.\n\n"
