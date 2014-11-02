@@ -20,7 +20,7 @@ class TestNAME < Test::Unit::TestCase
     tests_ok = 0
     tests_failed = 0
 
-    1.upto(8) do |testno|
+    1.upto(8) { |testno|
       capacity_file_name = DatasetDirectory + CapacityFileFormat % testno
       capacity = get_single_value_from_file(capacity_file_name)
 
@@ -56,8 +56,8 @@ class TestNAME < Test::Unit::TestCase
       end
 
       puts "GA Time elapsed: #{ time_elapsed } seconds for #{ weights.size } items.\n\n"
-    
-    end
+
+    }
 
     puts "GA Optimal solutions found: #{ tests_ok }"
     puts "GA Non optimal solutions found: #{ tests_failed }"
@@ -73,7 +73,7 @@ class TestNAME < Test::Unit::TestCase
     tests_ok = 0
     tests_failed = 0
 
-    1.upto(8) do |testno|
+    1.upto(8) { |testno|
       capacity_file_name = DatasetDirectory + CapacityFileFormat % testno
       capacity = get_single_value_from_file(capacity_file_name)
 
@@ -105,13 +105,13 @@ class TestNAME < Test::Unit::TestCase
         puts 'BF Optimal solution found!'
         tests_ok += 1
       else
-	      puts "BF Non optimal solution found! Expected: #{ optimal_solution_profit }, found: #{ solution_profit }."
-	      tests_failed += 1
+        puts "BF Non optimal solution found! Expected: #{ optimal_solution_profit }, found: #{ solution_profit }."
+        tests_failed += 1
       end
 
       puts "BF Time elapsed: #{ time_elapsed } seconds for #{ weights.size } items.\n\n"
-    
-    end
+
+    }
 
     puts "BF Optimal solutions found: #{ tests_ok }"
     puts "BF Non optimal solutions found: #{ tests_failed }"
